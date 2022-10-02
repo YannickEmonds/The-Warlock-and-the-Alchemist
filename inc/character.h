@@ -42,5 +42,5 @@ private:
 class Warlock : private Mage
 {
 public:
-    Warlock(std::string name);
+    Warlock(std::string name, Race race);
 };
