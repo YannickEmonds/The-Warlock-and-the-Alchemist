@@ -1,4 +1,4 @@
-#include "inc/menu.h"
+#include "menu.h"
 #include <iostream>
 
 
@@ -26,6 +26,9 @@ void MenuSwitchOption::performAction() const
 }
 
 
+Menu::Menu(std::string _name) : name(_name) {}
+
+
 Menu::Menu(std::string _name,
          std::vector<Option> _options, 
          std::map<std::string, std::shared_ptr<Menu>> _reachableMenus)
@@ -48,15 +51,35 @@ void Menu::show() const
 }
 
 
+std::string Menu::getName() const
+{
+    return name;
+}
+
+
+void Menu::setOptions(std::vector<Option> newOptions)
+{
+    options = newOptions;
+}
+
+
 std::vector<Option> Menu::getOptions() const
 {
     return options;
 }
 
+
+void Menu::setReachableMenus(std::map<std::string, std::shared_ptr<Menu>> menus)
+{
+    reachableMenus = menus;
+}
+
+
 std::map<std::string, std::shared_ptr<Menu>> Menu::getReachableMenus() const
 {
     return reachableMenus;
 }
+
 
 std::shared_ptr<Menu> Menu::findReachableMenu(std::string menuName) const
 {

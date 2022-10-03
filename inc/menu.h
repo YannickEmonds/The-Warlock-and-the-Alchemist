@@ -4,6 +4,9 @@
 #include <map>
 
 
+class Menu;
+
+
 class Option
 {
 protected:
@@ -12,6 +15,8 @@ protected:
 
 public:
     Option(std::string name, std::shared_ptr<Menu> _menu);
+
+    bool operator==(const Option& other) const;
 
     std::string getName() const;
     virtual void performAction() const;
@@ -47,6 +52,7 @@ private:
     std::vector<Option> options;
     std::map<std::string, std::shared_ptr<Menu>> reachableMenus;
 public:
+    Menu(std::string name);
     Menu(std::string _name,
          std::vector<Option> _options, 
          std::map<std::string, std::shared_ptr<Menu>> _reachableMenus);
@@ -54,7 +60,10 @@ public:
     void createMenuText(std::string _text);
     void show() const;
     void close();
+    std::string getName() const;
+    void setOptions(std::vector<Option> newOptions);
     std::vector<Option> getOptions() const;
+    void setReachableMenus(std::map<std::string, std::shared_ptr<Menu>> menus);
     std::map<std::string, std::shared_ptr<Menu>> getReachableMenus() const;
     std::shared_ptr<Menu> findReachableMenu(std::string menuName) const;
 };

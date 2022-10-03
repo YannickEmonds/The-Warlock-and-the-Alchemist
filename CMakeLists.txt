@@ -2,7 +2,8 @@ cmake_minimum_required(VERSION 3.16)
 project( warlock_game LANGUAGES CXX )
 
 add_executable( ${PROJECT_NAME} src/main.cpp
-                                src/character.cpp )
+                                src/character.cpp
+                                src/menu.cpp )
 target_include_directories( ${PROJECT_NAME}
                             PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/inc>
                             )
@@ -23,14 +24,12 @@ FetchContent_MakeAvailable(googletest)
 
 enable_testing()
 set(TEST_EXECS
-    test_graph
-    test_priority_queue
-    test_dijkstra
+    test_menu
     )
 
 include(GoogleTest)
 foreach(exe IN LISTS TEST_EXECS)
-    add_executable( ${exe} "tests/${exe}.cpp" )
+    add_executable( ${exe} "tests/${exe}.cpp" "src/menu.cpp" )
     target_include_directories( ${exe} PRIVATE inc )
     target_link_libraries( ${exe} gtest_main gmock gmock_main )
     set_target_properties( ${exe} PROPERTIES CXX_STANDARD 20 )
