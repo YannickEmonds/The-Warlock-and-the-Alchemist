@@ -10,11 +10,14 @@ class Menu;
 class Option
 {
 protected:
-    const std::string name;
-    const std::shared_ptr<Menu> menu;
+    std::string name;
+    std::shared_ptr<Menu> menu;
 
 public:
     Option(std::string name, std::shared_ptr<Menu> _menu);
+    Option(const Option& op);
+    Option& operator=(const Option& op);
+    ~Option();
 
     bool operator==(const Option& other) const;
 
@@ -26,10 +29,11 @@ public:
 class MenuSwitchOption : public Option
 {
 private:
-    const std::string destMenuName;
+    std::string destMenuName;
 public:
     MenuSwitchOption(std::string _name, std::shared_ptr<Menu> _menu, 
                      std::string _destMenuName);
+    MenuSwitchOption& operator=(const MenuSwitchOption& op);
 
     void performAction() const override;
 };
@@ -61,7 +65,7 @@ public:
     void show() const;
     void close();
     std::string getName() const;
-    void setOptions(std::vector<Option> newOptions);
+    void setOptions(const std::vector<Option>& newOptions);
     std::vector<Option> getOptions() const;
     void setReachableMenus(std::map<std::string, std::shared_ptr<Menu>> menus);
     std::map<std::string, std::shared_ptr<Menu>> getReachableMenus() const;

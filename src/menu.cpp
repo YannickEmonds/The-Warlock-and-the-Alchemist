@@ -6,10 +6,31 @@ Option::Option(std::string _name, std::shared_ptr<Menu> _menu)
     : name(_name), menu(_menu) {}
 
 
+Option::Option(const Option& op)
+    : name(op.name), menu(op.menu) {}
+
+
+Option& Option::operator=(const Option& op)
+{
+    name = op.name;
+    menu = op.menu;
+    return *this;
+}
+
+Option::~Option() {}
+
+bool Option::operator==(const Option& other) const
+{
+    return name == other.name && menu == other.menu;
+}
+
 std::string Option::getName() const
 {
     return name;
 }
+
+
+void Option::performAction() const {}
 
 
 MenuSwitchOption::MenuSwitchOption(std::string _name,
@@ -17,6 +38,14 @@ MenuSwitchOption::MenuSwitchOption(std::string _name,
                                    std::string _destMenuName)
     : Option(_name, _menu), destMenuName(_destMenuName) {}
 
+
+MenuSwitchOption& MenuSwitchOption::operator=(const MenuSwitchOption& op)
+{
+    name = op.name;
+    menu = op.menu;
+    destMenuName = op.destMenuName;
+    return *this;
+}
 
 
 void MenuSwitchOption::performAction() const
@@ -57,7 +86,7 @@ std::string Menu::getName() const
 }
 
 
-void Menu::setOptions(std::vector<Option> newOptions)
+void Menu::setOptions(const std::vector<Option>& newOptions)
 {
     options = newOptions;
 }
