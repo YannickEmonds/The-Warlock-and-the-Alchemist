@@ -51,3 +51,26 @@ TEST_F(MenuTest, SetParameters)
     EXPECT_EQ(menu.findReachableMenu("Quit"), quitMenu);
     EXPECT_EQ(menu.findReachableMenu("Test"), nullptr);
 }
+
+TEST_F(MenuTest, TestMenuSwitchOption)
+{
+    auto nextMenu = std::make_shared<Menu>(Menu("Next"));
+    nextMenu->createMenuText("This is the next menu.");
+    std::map<std::string, std::shared_ptr<Menu>> reachableMenus = {
+        {"Next", nextMenu}
+    };
+
+    MenuSwitchOption option("toNext", std::make_shared<Menu>(menu), "Next");
+    std::vector<Option> optionVec {option};
+
+    menu.setReachableMenus(reachableMenus);
+    menu.setOptions(optionVec);
+
+    EXPECT_EQ(menu.getReachableMenus(), reachableMenus);
+    EXPECT_EQ(menu.findReachableMenu("Next"), nextMenu);
+    EXPECT_EQ(option.getMenu().get(), &menu);
+    EXPECT_EQ(option.getMenu()->getReachableMenus(), menu.getReachableMenus());
+
+    menu.show();
+    // option.performAction();
+}
