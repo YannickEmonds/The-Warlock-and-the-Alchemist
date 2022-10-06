@@ -17,11 +17,12 @@ public:
     Option(std::string name, std::shared_ptr<Menu> _menu);
     Option(const Option& op);
     Option& operator=(const Option& op);
-    ~Option();
+    virtual ~Option();
 
     bool operator==(const Option& other) const;
 
     std::string getName() const;
+    std::shared_ptr<Menu> getMenu() const;
     virtual void performAction() const;
 };
 
@@ -31,8 +32,8 @@ class MenuSwitchOption : public Option
 private:
     std::string destMenuName;
 public:
-    MenuSwitchOption(std::string _name, std::shared_ptr<Menu> _menu, 
-                     std::string _destMenuName);
+    MenuSwitchOption(const std::string& _name, std::shared_ptr<Menu> _menu, 
+                     const std::string& _destMenuName);
     MenuSwitchOption& operator=(const MenuSwitchOption& op);
 
     void performAction() const override;

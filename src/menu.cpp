@@ -30,12 +30,18 @@ std::string Option::getName() const
 }
 
 
+std::shared_ptr<Menu> Option::getMenu() const
+{
+    return menu;
+}
+
+
 void Option::performAction() const {}
 
 
-MenuSwitchOption::MenuSwitchOption(std::string _name,
+MenuSwitchOption::MenuSwitchOption(const std::string& _name,
                                    std::shared_ptr<Menu> _menu,
-                                   std::string _destMenuName)
+                                   const std::string& _destMenuName)
     : Option(_name, _menu), destMenuName(_destMenuName) {}
 
 
